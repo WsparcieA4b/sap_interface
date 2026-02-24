@@ -1,0 +1,10 @@
+.DS_*
+node_modules
+test.sh
+package-lock.json
+ecosystem.config.js
+
+logs
+logs/exceptions.log
+logs/combined.log
+
