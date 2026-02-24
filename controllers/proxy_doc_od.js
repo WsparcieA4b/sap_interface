@@ -11,9 +11,7 @@ const fetch = require('node-fetch')
 router.post('/proxy_docod', async function (req, res, next) {
     const doc_o = req.body
     const urlOd = connOD.host// process.env.PROD_SAP_OD_API_URL // endpoint do SAP 
-    const url = conn.host + conn.port + conn.endpoint_purchase //endpoint z Purchase do AUth?
-    // logger.info('[proxy_od.post] url: ' + url)
-    // logger.info('[proxy_od.post] req.body: ' + JSON.stringify(req.body))
+    const url = conn.host + conn.port + conn.endpoint_purchase //endpoint z Purchase do AUth? 
     let fakeBody = { ...doc_o }
     try {
         const response = await fprx.fetchToken(url, conn.passphrase, conn.pfxFilePath)
@@ -42,7 +40,7 @@ router.post('/proxy_docod', async function (req, res, next) {
 async function postData(res, data, url, cookie, token, passphr, pfxFilePath) {
     const myHeaders = fprx.createHeaders("application/json", token)
     myHeaders.append("Cookie", cookie)
-    logger.info('[proxy_od.post] ' + JSON.stringify(data))
+    // logger.info('[proxy_od.post] ' + JSON.stringify(data))
     const requestOptions = {
         method: conn.method,
         body: JSON.stringify(data),
@@ -56,6 +54,7 @@ async function postData(res, data, url, cookie, token, passphr, pfxFilePath) {
         const response = await fetch(url, requestOptions);
         const { ok: isOK, status, statusText: message, data } = response || {}
         const result = await response.text();
+        console.log()
         console.info('-------- POST OD result -----------')
         console.log(result)
         const post_ret = { ok: isOK, status, message, data: result }
